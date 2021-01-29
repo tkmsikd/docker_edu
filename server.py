@@ -1,5 +1,10 @@
-import subprocess
-import getpass
+import http.server
+import socketserver
 
-uname = getpass.getuser()
-subprocess.run(["echo", "hello", str(uname)])
+PORT = 8000
+
+Handler = http.server.SimpleHTTPRequestHandler
+
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    print("serving at port", PORT)
+    httpd.serve_forever()
